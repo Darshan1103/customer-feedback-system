@@ -7,9 +7,10 @@ const FeedbackSchema = new mongoose.Schema(
     organization: String,
     role: String,
     usabilityRating: Number,
-    uiRating: Number,
+    proteinAnalysisRating: Number,
+    moleculeDiscoveryRating: Number,
     recommendationRating: Number,
-    strengths: String,
+    strengths: String,  
     improvements: String,
     additionalComments: String,
     adminReply: {
