@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
+import "../styles/AdminDashboard.css";
 
 function AdminDashboard() {
   const [feedbacks, setFeedbacks] = useState([]);
@@ -63,12 +64,10 @@ function AdminDashboard() {
   };
 
   return (
-    <div style={{ padding: "20px" }}>
-      <h1>Admin Dashboard</h1>
-      <p>Total Feedbacks: {totalFeedbacks}</p>
-      <p>Replied Feedbacks: {repliedFeedbacks}</p>
-      <p>Pending Replies: {pendingReplies}</p>
-
+    <div className="admin-container">
+      <h1 className="dashboard-title">
+        Admin Dashboard
+      </h1>
       <div className="stats-container">
         <div className="stat-card">
           <h3>{totalFeedbacks}</h3>
@@ -88,6 +87,7 @@ function AdminDashboard() {
 
 
       <input
+        className="search-box"
         type="text"
         placeholder="Search by name or email"
         value={searchTerm}
@@ -95,15 +95,10 @@ function AdminDashboard() {
       />
 
       {filteredFeedbacks.map((feedback) => (
-        <div
-          key={feedback._id}
-          style={{
-            border: "1px solid #ccc",
-            borderRadius: "10px",
-            padding: "15px",
-            marginBottom: "15px",
-          }}
-        >
+      <div
+        key={feedback._id}
+        className="feedback-card"
+      >
           <h3>{feedback.customerName}</h3>
 
           <p>Email: {feedback.email}</p>

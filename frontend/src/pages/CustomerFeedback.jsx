@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useState } from "react";
+import StarRating from "../components/StarRating";
 
 function CustomerFeedback() {
   const [formData, setFormData] = useState({
@@ -77,50 +78,57 @@ function CustomerFeedback() {
           onChange={handleChange}
         />
 
-        <label>Platform Usability </label>
-        <input
-            type="range"
-            min="1"
-            max="5"
-            name="usabilityRating"
-            value={formData.usabilityRating}
-            onChange={handleChange}
+        <label>Platform Usability</label>
+
+        <StarRating
+          rating={formData.usabilityRating}
+          setRating={(value) =>
+          setFormData({
+          ...formData,
+          usabilityRating: value,
+          })
+        }
         />
 
         <p>{formData.usabilityRating} / 5</p>
 
         <label>Protein Analysis Experience</label>
-        <input
-        type="range"
-        min="1"
-        max="5"
-        name="proteinAnalysisRating"
-        value={formData.proteinAnalysisRating}
-        onChange={handleChange}
+        <StarRating
+          rating={formData.proteinAnalysisRating}
+          setRating={(value) =>
+            setFormData({
+              ...formData,
+              proteinAnalysisRating: value,
+            })
+          }
         />
 
         <p>{formData.proteinAnalysisRating} / 5</p>
 
         <label>Molecule Discovery Quality</label>
-        <input
-        type="range"
-        min="1"
-        max="5"
-        name="moleculeDiscoveryRating"
-        value={formData.moleculeDiscoveryRating}
-        onChange={handleChange}
+
+        <StarRating
+          rating={formData.moleculeDiscoveryRating}
+          setRating={(value) =>
+            setFormData({
+              ...formData,
+              moleculeDiscoveryRating: value,
+            })
+          }
         />
 
         <p>{formData.moleculeDiscoveryRating} / 5</p>
 
         <label>Would You Recommend BioNex?</label>
-        <input
-        type="range"
-        min="1"
-        max="5"
-        name="recommendationRating"
-        value={formData.recommendationRating}
-        onChange={handleChange}
+
+        <StarRating
+          rating={formData.recommendationRating}
+          setRating={(value) =>
+            setFormData({
+              ...formData,
+              recommendationRating: value,
+            })
+          }
         />
 
         <p>{formData.recommendationRating} / 5</p>
