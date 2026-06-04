@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useState } from "react";
 import StarRating from "../components/StarRating";
+import "../styles/Main.css";
 
 function CustomerFeedback() {
   const [formData, setFormData] = useState({
@@ -17,6 +18,8 @@ function CustomerFeedback() {
     additionalComments: "",
   });
 
+  const [successMessage, setSuccessMessage] = useState("");
+
   const handleChange = (e) => {
     setFormData({
       ...formData,
@@ -25,137 +28,213 @@ function CustomerFeedback() {
   };
 
   const handleSubmit = async () => {
-  try {
-    const response = await axios.post(
-      "http://localhost:5000/api/feedback",
-      formData
-    );
-
-    alert("Feedback Submitted Successfully");
-
-    console.log(response.data);
-    } catch (error) {
-    console.error(error);
-    alert("Error submitting feedback");
+    if (
+      !formData.customerName.trim() ||
+      !formData.email.trim() ||
+      !formData.organization.trim() ||
+      !formData.role.trim()
+    ) {
+      alert(
+        "Please fill all required fields."
+      );
+      return;
     }
+    try {
+      const response = await axios.post(
+        "http://localhost:5000/api/feedback",
+        formData
+      );
+
+      setSuccessMessage(
+        "✓ Feedback submitted successfully"
+      );
+
+      setFormData({
+        customerName: "",
+        email: "",
+        organization: "",
+        role: "",
+        usabilityRating: 0,
+        proteinAnalysisRating: 0,
+        moleculeDiscoveryRating: 0,
+        recommendationRating: 0,    
+        strengths: "",
+        improvements: "",
+        additionalComments: "",
+      });
+
+      console.log(response.data);
+      } catch (error) {
+      console.error(error);
+      alert("Error submitting feedback");
+      }
   };
 
   return (
     <div className="container">
       <div className="feedback-card">
-        <h1>NexTribe Labs Feedback</h1>
-        <h2>Help us improve our Platform</h2>
+        <h1 className="feedback-title">
+          NexTribe Labs Feedback
+        </h1>
+
+        <p className="feedback-subtitle">
+          Help us improve our AI Drug Discovery Platform
+        </p>
+
+        <label className="field-label">
+          Full Name *
+        </label>
 
         <input
           type="text"
           name="customerName"
-          placeholder="Full Name"
+          placeholder="Enter your full Name"
+          required
           value={formData.customerName}
           onChange={handleChange}
         />
 
+        <label className="field-label">
+          Email *
+        </label>
+
         <input
           type="email"
           name="email"
-          placeholder="Email"
+          placeholder="Enter your Email"
+          required
           value={formData.email}
           onChange={handleChange}
         />
 
+        <label className="field-label">
+          Organization *
+        </label>
+
         <input
           type="text"
           name="organization"
-          placeholder="Organization"
+          placeholder="Enter your Organization"
+          required
           value={formData.organization}
           onChange={handleChange}
         />
 
+        <label className="field-label">
+          Role *
+        </label>
+
         <input
           type="text"
           name="role"
-          placeholder="Role"
+          placeholder="Enter your Role"
+          required
           value={formData.role}
           onChange={handleChange}
         />
 
-        <label>Platform Usability</label>
+        <div className="section-divider"></div>
 
-        <StarRating
-          rating={formData.usabilityRating}
-          setRating={(value) =>
-          setFormData({
-          ...formData,
-          usabilityRating: value,
-          })
-        }
-        />
+        <div className="rating-row">
+          <span className="rating-title">
+            Platform Usability
+          </span>
 
-        <p>{formData.usabilityRating} / 5</p>
+          <StarRating
+            rating={formData.usabilityRating}
+            setRating={(value) =>
+              setFormData({
+                ...formData,
+                usabilityRating: value,
+              })
+            }
+          />
+        </div>
 
-        <label>Protein Analysis Experience</label>
-        <StarRating
-          rating={formData.proteinAnalysisRating}
-          setRating={(value) =>
-            setFormData({
-              ...formData,
-              proteinAnalysisRating: value,
-            })
-          }
-        />
+        <div className="rating-row">
+          <span className="rating-title">
+            Protein Analysis Experience
+          </span>
 
-        <p>{formData.proteinAnalysisRating} / 5</p>
+          <StarRating
+            rating={formData.proteinAnalysisRating}
+            setRating={(value) =>
+              setFormData({
+                ...formData,
+                proteinAnalysisRating: value,
+              })
+            }
+          />
+        </div>
 
-        <label>Molecule Discovery Quality</label>
+        <div className="rating-row">
+          <span className="rating-title">
+            Molecule Discovery Quality
+          </span>
 
-        <StarRating
-          rating={formData.moleculeDiscoveryRating}
-          setRating={(value) =>
-            setFormData({
-              ...formData,
-              moleculeDiscoveryRating: value,
-            })
-          }
-        />
+          <StarRating
+            rating={formData.moleculeDiscoveryRating}
+            setRating={(value) =>
+              setFormData({
+                ...formData,
+                moleculeDiscoveryRating: value,
+              })
+            }
+          />
+        </div>
 
-        <p>{formData.moleculeDiscoveryRating} / 5</p>
+        <div className="rating-row">
+          <span className="rating-title">
+            Would You Recommend NexTribe?
+          </span>
 
-        <label>Would You Recommend BioNex?</label>
+          <StarRating
+            rating={formData.recommendationRating}
+            setRating={(value) =>
+              setFormData({
+                ...formData,
+                recommendationRating: value,
+              })
+            }
+          />
+        </div>
 
-        <StarRating
-          rating={formData.recommendationRating}
-          setRating={(value) =>
-            setFormData({
-              ...formData,
-              recommendationRating: value,
-            })
-          }
-        />
+        <div className="section-divider"></div>
 
-        <p>{formData.recommendationRating} / 5</p>
-
+        <label>Strengths</label>
         <textarea
           name="strengths"
-          placeholder="What did you like?"
+          placeholder="Share what you like about our platform?"
           value={formData.strengths}
           onChange={handleChange}
         />
 
+        <label>Improvements</label>
         <textarea
           name="improvements"
-          placeholder="What can be improved?"
+          placeholder="Share your suggestions for improvement?"
           value={formData.improvements}
           onChange={handleChange}
         />
-
+        <label>Additional Comments</label>
         <textarea
           name="additionalComments"
-          placeholder="Additional Comments"
+          placeholder="Any other feedback you would like to share?"
           value={formData.additionalComments}
           onChange={handleChange}
         />
+        
+        {successMessage && (
+          <div className="success-banner">
+            {successMessage}
+          </div>
+        )}
 
-        <button onClick={handleSubmit}>
-        Submit Feedback
+        <button
+          className="submit-btn"
+          onClick={handleSubmit}
+        >
+          Submit Feedback
         </button>  
       </div>
     </div>
