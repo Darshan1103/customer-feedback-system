@@ -68,18 +68,21 @@ function AdminDashboard() {
       <h1 className="dashboard-title">
         Admin Dashboard
       </h1>
+      <p className="dashboard-subtitle">
+        Manage and respond to customer feedback
+      </p>
       <div className="stats-container">
         <div className="stat-card">
           <h3>{totalFeedbacks}</h3>
           <p>Total Feedbacks</p>
         </div>
 
-        <div className="stat-card">
+        <div className="stat-card replied-card">
           <h3>{repliedFeedbacks}</h3>
           <p>Replied</p>
         </div>
 
-        <div className="stat-card">
+        <div className="stat-card pending-card">
           <h3>{pendingReplies}</h3>
           <p>Pending Replies</p>
         </div>
@@ -98,45 +101,53 @@ function AdminDashboard() {
       <div
         key={feedback._id}
         className="feedback-card"
-      >
+      > 
+
+          <div
+            className={
+              feedback.adminReply
+              ? "status replied"
+              : "status pending"
+            }
+          >
+            {feedback.adminReply
+                ? "Replied"
+                : "Pending Reply"}
+         </div>
+
+
           <h3>{feedback.customerName}</h3>
 
-          <p>Email: {feedback.email}</p>
+          <p><strong>Email:</strong> {feedback.email}</p>
 
-          <p>Organization: {feedback.organization}</p>
+          <p><strong>Organization:</strong> {feedback.organization}</p>
 
-          <p>Role: {feedback.role}</p>
+          <p><strong>Role:</strong> {feedback.role}</p>
 
-          <p>Usability Rating: {feedback.usabilityRating}</p>
+          <p><strong>Usability Rating:</strong> {feedback.usabilityRating}</p>
 
           <p>
-            Protein Analysis Rating:
-            {feedback.proteinAnalysisRating}
+            <strong>Protein Analysis Rating:</strong> {feedback.proteinAnalysisRating}
           </p>
 
           <p>
-            Molecule Discovery Rating:
-            {feedback.moleculeDiscoveryRating}
+            <strong>Molecule Discovery Rating:</strong> {feedback.moleculeDiscoveryRating}
           </p>
 
           <p>
-            Recommendation Rating:
-            {feedback.recommendationRating}
+            <strong>Recommendation Rating:</strong> {feedback.recommendationRating}
           </p>
 
           <p>
-            <strong>Strengths:</strong>
-            {feedback.strengths}
+            <strong>Strengths:</strong> {feedback.strengths}
           </p>
 
           <p>
-            <strong>Improvements:</strong>
-            {feedback.improvements}
+            <strong>Improvements:</strong> {feedback.improvements}
           </p>
 
           <p>
-            <strong>Comments:</strong>
-            {feedback.additionalComments}
+            <strong>Comments:</strong> {feedback.additionalComments}
           </p>
           <hr />
 
@@ -157,6 +168,7 @@ function AdminDashboard() {
           <br />
 
           <button
+          className="reply-btn"
           onClick={() =>
               saveReply(feedback._id)
           }

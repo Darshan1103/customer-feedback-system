@@ -88,7 +88,7 @@ function CustomerFeedback() {
         <input
           type="text"
           name="customerName"
-          placeholder="Enter your full Name"
+          placeholder="Enter your full name"
           required
           value={formData.customerName}
           onChange={handleChange}
@@ -101,7 +101,7 @@ function CustomerFeedback() {
         <input
           type="email"
           name="email"
-          placeholder="Enter your Email"
+          placeholder="Enter your email"
           required
           value={formData.email}
           onChange={handleChange}
@@ -114,7 +114,7 @@ function CustomerFeedback() {
         <input
           type="text"
           name="organization"
-          placeholder="Enter your Organization"
+          placeholder="Enter your organization name"
           required
           value={formData.organization}
           onChange={handleChange}
@@ -127,7 +127,7 @@ function CustomerFeedback() {
         <input
           type="text"
           name="role"
-          placeholder="Enter your Role"
+          placeholder="Enter your role"
           required
           value={formData.role}
           onChange={handleChange}
@@ -223,7 +223,7 @@ function CustomerFeedback() {
           value={formData.additionalComments}
           onChange={handleChange}
         />
-        
+
         {successMessage && (
           <div className="success-banner">
             {successMessage}
