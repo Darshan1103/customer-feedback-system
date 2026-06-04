@@ -4,8 +4,24 @@ import { useEffect, useState } from 'react';
 function AdminDashboard() {
   const [feedbacks, setFeedbacks] = useState([]);
   const [replyText, setReplyText] = useState({});
+  const [searchTerm, setSearchTerm] = useState("");
+  const totalFeedbacks = feedbacks.length;
 
+  const repliedFeedbacks = feedbacks.filter(
+    (item) => item.adminReply && item.adminReply.trim() !== ""
+  ).length;
 
+  const pendingReplies = totalFeedbacks - repliedFeedbacks;
+  
+  const filteredFeedbacks = feedbacks.filter(
+    (feedback) =>
+      feedback.customerName
+        ?.toLowerCase()
+        .includes(searchTerm.toLowerCase()) ||
+      feedback.email
+        ?.toLowerCase()
+        .includes(searchTerm.toLowerCase())
+  );
   const fetchFeedbacks = async () => {
     try {
       const response = await axios.get(
@@ -49,8 +65,36 @@ function AdminDashboard() {
   return (
     <div style={{ padding: "20px" }}>
       <h1>Admin Dashboard</h1>
+      <p>Total Feedbacks: {totalFeedbacks}</p>
+      <p>Replied Feedbacks: {repliedFeedbacks}</p>
+      <p>Pending Replies: {pendingReplies}</p>
 
-      {feedbacks.map((feedback) => (
+      <div className="stats-container">
+        <div className="stat-card">
+          <h3>{totalFeedbacks}</h3>
+          <p>Total Feedbacks</p>
+        </div>
+
+        <div className="stat-card">
+          <h3>{repliedFeedbacks}</h3>
+          <p>Replied</p>
+        </div>
+
+        <div className="stat-card">
+          <h3>{pendingReplies}</h3>
+          <p>Pending Replies</p>
+        </div>
+      </div>
+
+
+      <input
+        type="text"
+        placeholder="Search by name or email"
+        value={searchTerm}
+        onChange={(e) => setSearchTerm(e.target.value)}
+      />
+
+      {filteredFeedbacks.map((feedback) => (
         <div
           key={feedback._id}
           style={{
