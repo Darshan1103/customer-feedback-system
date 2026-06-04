@@ -236,6 +236,26 @@ function CustomerFeedback() {
         >
           Submit Feedback
         </button>  
+        
+        <p
+          style={{
+            textAlign: "center",
+            marginTop: "12px",
+            fontSize: "14px",
+          }}
+        >
+          <a
+            href="/status"
+            style={{
+              color: "#3347c7",
+              textDecoration: "none",
+              fontWeight: "500",
+            }}
+          >
+            Click to check your feedback status
+          </a>
+        </p>
+
       </div>
     </div>
   );

@@ -27,6 +27,22 @@ router.get("/", async (req, res) => {
   }
 });
 
+router.get("/email/:email", async (req, res) => {
+  try {
+    const feedbacks = await Feedback.find({
+      email: req.params.email,
+    }).sort({
+      createdAt: -1,
+    });
+
+    res.status(200).json(feedbacks);
+  } catch (error) {
+    res.status(500).json({
+      message: error.message,
+    });
+  }
+});
+
 // Update admin reply
 router.put("/:id/reply", async (req, res) => {
   try {
