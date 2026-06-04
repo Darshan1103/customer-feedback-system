@@ -27,4 +27,23 @@ router.get("/", async (req, res) => {
   }
 });
 
+// Update admin reply
+router.put("/:id/reply", async (req, res) => {
+  try {
+    const feedback = await Feedback.findByIdAndUpdate(
+      req.params.id,
+      {
+        adminReply: req.body.adminReply,
+      },
+      { new: true }
+    );
+
+    res.status(200).json(feedback);
+  } catch (error) {
+    res.status(500).json({
+      message: error.message,
+    });
+  }
+});
+
 module.exports = router;

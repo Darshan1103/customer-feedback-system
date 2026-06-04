@@ -1,8 +1,9 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
-    
+
 function AdminDashboard() {
   const [feedbacks, setFeedbacks] = useState([]);
+  const [replyText, setReplyText] = useState({});
 
 
   const fetchFeedbacks = async () => {
@@ -20,6 +21,30 @@ function AdminDashboard() {
   useEffect(() => {
     fetchFeedbacks();
   }, []);
+
+  const handleReplyChange = (id, value) => {
+  setReplyText({
+      ...replyText,
+      [id]: value,
+    });
+  };
+
+  const saveReply = async (id) => {
+    try {
+        await axios.put(
+        `http://localhost:5000/api/feedback/${id}/reply`,
+        {
+            adminReply: replyText[id],
+        }
+        );
+
+        alert("Reply Saved");
+
+        fetchFeedbacks();
+    } catch (error) {
+        console.error(error);
+    }
+  };
 
   return (
     <div style={{ padding: "20px" }}>
@@ -74,6 +99,38 @@ function AdminDashboard() {
             <strong>Comments:</strong>
             {feedback.additionalComments}
           </p>
+          <hr />
+
+          <h4>Admin Reply</h4>
+
+          <textarea
+          rows="3"
+          placeholder="Write a reply..."
+          value={replyText[feedback._id] || ""}
+          onChange={(e) =>
+              handleReplyChange(
+              feedback._id,
+              e.target.value
+              )
+          }
+          />
+
+          <br />
+
+          <button
+          onClick={() =>
+              saveReply(feedback._id)
+          }
+          >
+          Save Reply
+          </button>
+
+          {feedback.adminReply && (
+          <p>
+              <strong>Saved Reply:</strong>
+              {feedback.adminReply}
+          </p>
+          )}
         </div>
       ))}
     </div>
