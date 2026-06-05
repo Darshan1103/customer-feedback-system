@@ -57,7 +57,7 @@ function AdminDashboard() {
 
         alert("Reply Saved");
 
-        fetchFeedbacks();
+        await fetchFeedbacks();
     } catch (error) {
         console.error(error);
     }
@@ -96,6 +96,17 @@ function AdminDashboard() {
         value={searchTerm}
         onChange={(e) => setSearchTerm(e.target.value)}
       />
+
+      {filteredFeedbacks.length === 0 && (
+        <p
+          style={{
+            textAlign: "center",
+            color: "#64748b",
+          }}
+        >
+          No feedbacks found.
+        </p>
+      )}
 
       {filteredFeedbacks.map((feedback) => (
       <div

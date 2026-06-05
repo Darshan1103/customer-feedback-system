@@ -28,6 +28,9 @@ function CustomerFeedback() {
   };
 
   const handleSubmit = async () => {
+    
+    setSuccessMessage("");
+
     if (
       !formData.customerName.trim() ||
       !formData.email.trim() ||

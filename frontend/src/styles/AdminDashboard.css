@@ -99,18 +99,6 @@
   line-height: 1.8;
 }
 
-.reply-box {
-  width: 100%;
-
-  padding: 14px;
-
-  border-radius: 10px;
-
-  border: 1px solid #d1d5db;
-
-  margin-top: 10px;
-}
-
 .reply-btn {
   margin-top: 15px;
 
@@ -179,4 +167,9 @@
 
 .pending-card h3 {
   color: #92400e;
+}
+
+.search-box:focus {
+  outline: none;
+  border-color: #5b3df5;
 }
