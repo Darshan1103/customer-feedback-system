@@ -159,20 +159,87 @@ function AdminDashboard() {
           </p>
 
           <p><strong>Overall Experience:</strong>{" "}{feedback.overallExperience}</p>
+          {feedback.overallExperienceReason && (
+            <p>
+              <strong>Reason:</strong>{" "}
+              <span className="reason-text">
+                {feedback.overallExperienceReason}
+              </span>
+
+            </p>
+          )}
 
           <p><strong>Platform Usability:</strong>{" "}{feedback.platformUsability}</p>
+          {feedback.platformUsabilityReason && (
+            <p>
+              <strong>Reason:</strong>{" "}
+              <span className="reason-text">
+                {feedback.platformUsabilityReason}
+              </span>
+            </p>
+          )}
 
           <p><strong>AI Molecule Generation:</strong>{" "}{feedback.aiMoleculeGeneration}</p>
+          {feedback.aiMoleculeGenerationReason && (
+            <p>
+              <strong>Reason:</strong>{" "}
+              <span className="reason-text">
+                {feedback.aiMoleculeGenerationReason}
+              </span>
+            </p>
+          )}
 
           <p><strong>Protein Analysis:</strong>{" "}{feedback.proteinAnalysis}</p>  
+          {feedback.proteinAnalysisReason && (
+            <p>
+              <strong>Reason:</strong>{" "}
+              <span className="reason-text">
+                {feedback.proteinAnalysisReason}
+              </span>
+            </p>
+          )}
 
           <p><strong>Speed Performance:</strong>{" "}{feedback.speedPerformance}</p>
+          {feedback.speedPerformanceReason && (
+            <p>
+              <strong>Reason:</strong>{" "}
+              <span className="reason-text">
+                {feedback.speedPerformanceReason}
+              </span>
+                
+            </p>
+
+          )}
 
           <p><strong>Accuracy & Reliability:</strong>{" "}{feedback.accuracyReliability}</p>
+          {feedback.accuracyReliabilityReason && (
+            <p>
+              <strong>Reason:</strong>{" "}
+              <span className="reason-text">
+                {feedback.accuracyReliabilityReason}
+              </span>
+            </p>
+          )}
 
           <p><strong>Data Visualization:</strong>{" "}{feedback.dataVisualization}</p>
+          {feedback.dataVisualizationReason && (
+            <p>
+              <strong>Reason:</strong>{" "}
+              <span className="reason-text">
+                {feedback.dataVisualizationReason}
+              </span>
+            </p>
+          )}
 
           <p><strong>Recommendation:</strong>{" "}{feedback.recommendation}</p>
+          {feedback.recommendationReason && (
+            <p>
+              <strong>Reason:</strong>{" "}
+              <span className="reason-text">
+                {feedback.recommendationReason}
+              </span>
+            </p>
+          )}
 
           <hr />
 

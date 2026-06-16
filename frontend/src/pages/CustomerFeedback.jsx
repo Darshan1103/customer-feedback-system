@@ -34,6 +34,14 @@ function CustomerFeedback() {
     accuracyReliability: "",
     dataVisualization: "",
     recommendation: "",
+    overallExperienceReason: "",
+    platformUsabilityReason: "",
+    aiMoleculeGenerationReason: "",
+    proteinAnalysisReason: "",
+    speedPerformanceReason: "",
+    accuracyReliabilityReason: "",
+    dataVisualizationReason: "",
+    recommendationReason: "",
 
   });
 
@@ -44,6 +52,9 @@ function CustomerFeedback() {
       ...formData,
       [e.target.name]: e.target.value,
     });
+  };
+  const showReasonField = (rating) => {
+    return rating === "Very Poor" || rating === "Poor";
   };
 
   const handleSubmit = async () => {
@@ -86,7 +97,8 @@ function CustomerFeedback() {
       formData.countryRegion === "Other" &&
       !formData.otherCountry.trim()
       )
-    ) {
+    ) 
+    {
       alert(
         "Please fill all required fields."
       );
@@ -124,13 +136,34 @@ function CustomerFeedback() {
         accuracyReliability: "",
         dataVisualization: "",
         recommendation: "",
+
+        overallExperienceReason: "",
+        platformUsabilityReason: "",
+        aiMoleculeGenerationReason: "",
+        proteinAnalysisReason: "",
+        speedPerformanceReason: "",
+        accuracyReliabilityReason: "",
+        dataVisualizationReason: "",
+        recommendationReason: "",
+
+        continueSection2: ""
       });
 
       console.log(response.data);
-      } catch (error) {
+    } 
+    catch (error) {
       console.error(error);
       alert("Error submitting feedback");
       }
+
+    if (
+      showReasonField(formData.overallExperience) &&
+      !formData.overallExperienceReason.trim()
+    ) {
+      alert("Please explain your rating.");
+      return;
+    }
+
   };
 
   return (
@@ -332,6 +365,15 @@ function CustomerFeedback() {
           ))}
         </div>
 
+        {showReasonField(formData.overallExperience) && (
+          <textarea
+            name="overallExperienceReason"
+            placeholder="Please tell us why..."
+            value={formData.overallExperienceReason}
+            onChange={handleChange}
+          />
+        )}
+
         <label className="field-label">
           Platform Usability & Navigation *
         </label>
@@ -352,6 +394,15 @@ function CustomerFeedback() {
             </label>
           ))}
         </div>
+
+        {showReasonField(formData.platformUsability) && (
+          <textarea
+            name="platformUsabilityReason"
+            placeholder="Please tell us why..."
+            value={formData.platformUsabilityReason}
+            onChange={handleChange}
+          />
+        )}
 
         <label className="field-label">
           AI Molecule Generation Quality *
@@ -374,6 +425,15 @@ function CustomerFeedback() {
           ))}
         </div>
 
+        {showReasonField(formData.aiMoleculeGeneration) && (
+          <textarea
+            name="aiMoleculeGenerationReason"
+            placeholder="Please tell us why..."
+            value={formData.aiMoleculeGenerationReason}
+            onChange={handleChange}
+          />
+        )}
+
         <label className="field-label">
           Protein Analysis & Insights *
         </label>
@@ -394,6 +454,15 @@ function CustomerFeedback() {
             </label>
           ))}
         </div>
+          
+        {showReasonField(formData.proteinAnalysis) && (
+          <textarea
+            name="proteinAnalysisReason"
+            placeholder="Please tell us why..."
+            value={formData.proteinAnalysisReason}
+            onChange={handleChange}
+          />
+        )}
 
         <label className="field-label">
           Speed & Performance *
@@ -416,6 +485,15 @@ function CustomerFeedback() {
           ))}
         </div>
 
+        {showReasonField(formData.speedPerformance) && (
+          <textarea
+            name="speedPerformanceReason"
+            placeholder="Please tell us why..."
+            value={formData.speedPerformanceReason}
+            onChange={handleChange}
+          />
+        )}
+
         <label className="field-label">
           Result Accuracy & Reliability *
         </label>
@@ -437,6 +515,15 @@ function CustomerFeedback() {
           ))}
         </div>
 
+        {showReasonField(formData.accuracyReliability) && (
+          <textarea
+            name="accuracyReliabilityReason"  
+            placeholder="Please tell us why..."
+            value={formData.accuracyReliabilityReason}
+            onChange={handleChange}
+          />
+        )}
+
         <label className="field-label">
           Data Visualization & Reports *
         </label>
@@ -457,6 +544,16 @@ function CustomerFeedback() {
             </label>
           ))}
         </div>
+
+        {showReasonField(formData.dataVisualization) && (
+          <textarea
+            name="dataVisualizationReason"
+            placeholder="Please tell us why..."
+            value={formData.dataVisualizationReason}
+            onChange={handleChange}
+          />
+        )}
+
         <label className="field-label">
           Would You Recommend NexTribe? *
         </label>
@@ -476,6 +573,46 @@ function CustomerFeedback() {
               {option}
             </label>
           ))}
+        </div>
+
+        {showReasonField(formData.recommendation) && (
+          <textarea
+            name="recommendationReason" 
+            placeholder="Please tell us why..."
+            value={formData.recommendationReason}
+            onChange={handleChange}
+          />
+        )}
+
+
+        <div className="section-divider"></div>
+
+        <label className="field-label">
+          Do you have a minute to answer a few more questions?
+        </label>
+
+        <div className="rating-options">
+          <label>
+            <input
+              type="radio"
+              name="continueSection2"
+              value="Yes"
+              checked={formData.continueSection2 === "Yes"}
+              onChange={handleChange}
+            />
+            Yes
+          </label>
+
+          <label>
+            <input
+              type="radio"
+              name="continueSection2"
+              value="Maybe Next Time"
+              checked={formData.continueSection2 === "Maybe Next Time"}
+              onChange={handleChange}
+            />
+            Maybe Next Time
+          </label>
         </div>
 
 

@@ -17,13 +17,21 @@ const FeedbackSchema = new mongoose.Schema(
     otherCountry: String,
     
     overallExperience: String,
+    overallExperienceReason: String,
     platformUsability: String,
+    platformUsabilityReason: String,
     aiMoleculeGeneration: String,
+    aiMoleculeGenerationReason: String,
     proteinAnalysis: String,
+    proteinAnalysisReason: String,
     speedPerformance: String,
+    speedPerformanceReason: String,
     accuracyReliability: String,
+    accuracyReliabilityReason: String,
     dataVisualization: String,
+    dataVisualizationReason: String,
     recommendation: String,
+    recommendationReason: String,
 
     adminReply: {
         type: String,
