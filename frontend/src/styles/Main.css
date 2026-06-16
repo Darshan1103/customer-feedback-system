@@ -27,7 +27,8 @@
 }
 
 .feedback-card input,
-.feedback-card textarea {
+.feedback-card textarea,
+.feedback-card select {
   width: 100%;
   padding: 14px;
   margin-bottom: 18px;
@@ -109,15 +110,19 @@
 }
 
 textarea {
-  min-height: 70px;
+  width: 100%;
+  min-height: 90px;
 
-  padding: 12px;
+  padding: 14px;
+
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
 
   font-size: 14px;
 
-  border-radius: 8px;
-
   resize: vertical;
+
+  margin-bottom: 18px;
 }
 
 textarea,

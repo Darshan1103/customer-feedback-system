@@ -9,6 +9,16 @@ function CustomerFeedback() {
     email: "",
     organization: "",
     role: "",
+    scientificDomain: "",
+    otherScientificDomain: "",
+
+    organizationType: "",
+    otherOrganizationType: "",
+
+    teamSize: "",
+    countryRegion: "",
+    otherCountry: "",
+
     usabilityRating: 5,
     proteinAnalysisRating: 5,
     moleculeDiscoveryRating: 5,
@@ -35,7 +45,15 @@ function CustomerFeedback() {
       !formData.customerName.trim() ||
       !formData.email.trim() ||
       !formData.organization.trim() ||
-      !formData.role.trim()
+      !formData.role.trim() ||
+      !formData.scientificDomain.trim() ||
+      !formData.organizationType.trim() ||
+      !formData.teamSize.trim() ||
+      !formData.countryRegion.trim()||
+      (
+      formData.countryRegion === "Other" &&
+      !formData.otherCountry.trim()
+      )
     ) {
       alert(
         "Please fill all required fields."
@@ -135,6 +153,119 @@ function CustomerFeedback() {
           value={formData.role}
           onChange={handleChange}
         />
+
+        <label className="field-label">
+          Scientific Domain *
+        </label>
+
+        <select
+          name="scientificDomain"
+          value={formData.scientificDomain}
+          onChange={handleChange}
+        >
+          <option value="">Select Domain</option>
+          <option value="Oncology">Oncology</option>
+          <option value="Neurology">Neurology</option>
+          <option value="Infectious Disease">
+            Infectious Disease
+          </option>
+          <option value="Materials Science">
+            Materials Science
+          </option>
+          <option value="Other">Other</option>
+        </select>
+
+        {formData.scientificDomain === "Other" && (
+          <input
+            type="text"
+            name="otherScientificDomain"
+            placeholder="Please specify"
+            value={formData.otherScientificDomain}
+            onChange={handleChange}
+          />
+        )}
+
+        <label className="field-label">
+          Organization Type *
+        </label>
+
+        <select
+          name="organizationType"
+          value={formData.organizationType}
+          onChange={handleChange}
+        >
+          <option value="">Select Type</option>
+          <option value="Pharma">Pharma</option>
+          <option value="Biotech">Biotech</option>
+          <option value="Academic">Academic</option>
+          <option value="CRO">CRO</option>
+          <option value="Government">Government</option>
+          <option value="Startup">Startup</option>
+          <option value="Other">Other</option>
+        </select>
+
+        {formData.organizationType === "Other" && (
+          <input
+            type="text"
+            name="otherOrganizationType"
+            placeholder="Please specify"
+            value={formData.otherOrganizationType}
+            onChange={handleChange}
+          />
+        )}
+
+        <label className="field-label">
+          Team Size *
+        </label>
+
+        <select
+          name="teamSize"
+          value={formData.teamSize}
+          onChange={handleChange}
+        >
+          <option value="">Select Team Size</option>
+          <option value="Solo">Solo</option>
+          <option value="2-10">2-10</option>
+          <option value="11-50">11-50</option>
+          <option value="50+">50+</option>
+        </select>
+
+        <label className="field-label">
+          Country / Region *
+        </label>
+
+        <select
+          name="countryRegion"
+          value={formData.countryRegion}
+          onChange={handleChange}
+        >
+          <option value="">
+            Select Country / Region
+          </option>
+
+          <option value="India">India</option>
+          <option value="United States">United States</option>
+          <option value="United Kingdom">United Kingdom</option>
+          <option value="Germany">Germany</option>
+          <option value="France">France</option>
+          <option value="Canada">Canada</option>
+          <option value="Australia">Australia</option>
+          <option value="Japan">Japan</option>
+          <option value="Singapore">Singapore</option>
+          <option value="China">China</option>
+          <option value="South Korea">South Korea</option>
+          <option value="Other">Other</option>
+        </select>
+
+        {formData.countryRegion === "Other" && (
+          <input
+            type="text"
+            name="otherCountry"
+            placeholder="Please specify country"
+            value={formData.otherCountry}
+            onChange={handleChange}
+          />
+        )}
 
         <div className="section-divider"></div>
 
