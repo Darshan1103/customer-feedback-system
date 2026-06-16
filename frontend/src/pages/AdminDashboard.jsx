@@ -135,6 +135,14 @@ function AdminDashboard() {
 
           <p><strong>Role:</strong> {feedback.role}</p>
 
+          <p><strong>Scientific Domain:</strong>{" "}{feedback.scientificDomain}</p>
+
+          <p><strong>Organization Type:</strong>{" "}{feedback.organizationType}</p>
+
+          <p><strong>Team Size:</strong>{" "}{feedback.teamSize}</p>
+
+          <p><strong>Country / Region:</strong>{" "}{feedback.countryRegion}</p>
+
           <p><strong>Usability Rating:</strong> {feedback.usabilityRating}</p>
 
           <p>
