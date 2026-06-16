@@ -16,13 +16,15 @@ const FeedbackSchema = new mongoose.Schema(
     countryRegion: String,
     otherCountry: String,
     
-    usabilityRating: Number,
-    proteinAnalysisRating: Number,
-    moleculeDiscoveryRating: Number,
-    recommendationRating: Number,
-    strengths: String,  
-    improvements: String,
-    additionalComments: String,
+    overallExperience: String,
+    platformUsability: String,
+    aiMoleculeGeneration: String,
+    proteinAnalysis: String,
+    speedPerformance: String,
+    accuracyReliability: String,
+    dataVisualization: String,
+    recommendation: String,
+
     adminReply: {
         type: String,
         default: ""

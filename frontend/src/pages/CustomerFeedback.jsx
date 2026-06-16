@@ -1,7 +1,14 @@
 import axios from "axios";
 import { useState } from "react";
-import StarRating from "../components/StarRating";
 import "../styles/Main.css";
+
+const ratingOptions = [
+  "Very Poor",
+  "Poor",
+  "Average",
+  "Good",
+  "Excellent",
+];
 
 function CustomerFeedback() {
   const [formData, setFormData] = useState({
@@ -18,14 +25,16 @@ function CustomerFeedback() {
     teamSize: "",
     countryRegion: "",
     otherCountry: "",
+    
+    overallExperience: "",
+    platformUsability: "",
+    aiMoleculeGeneration: "",
+    proteinAnalysis: "",
+    speedPerformance: "",
+    accuracyReliability: "",
+    dataVisualization: "",
+    recommendation: "",
 
-    usabilityRating: 5,
-    proteinAnalysisRating: 5,
-    moleculeDiscoveryRating: 5,
-    recommendationRating: 5,
-    strengths: "",
-    improvements: "",
-    additionalComments: "",
   });
 
   const [successMessage, setSuccessMessage] = useState("");
@@ -50,6 +59,29 @@ function CustomerFeedback() {
       !formData.organizationType.trim() ||
       !formData.teamSize.trim() ||
       !formData.countryRegion.trim()||
+      !formData.overallExperience.trim() ||
+      !formData.platformUsability.trim() ||
+      !formData.aiMoleculeGeneration.trim() ||
+      !formData.proteinAnalysis.trim() ||
+      !formData.speedPerformance.trim() ||
+      !formData.accuracyReliability.trim() ||
+      !formData.dataVisualization.trim() ||
+      !formData.recommendation.trim() ||
+      (
+        formData.scientificDomain === "Other" &&
+        !formData.otherScientificDomain.trim()
+      )
+      ||
+      (
+        formData.organizationType === "Other" &&
+        !formData.otherOrganizationType.trim()
+      )
+      ||
+      (
+        formData.countryRegion === "Other" &&
+        !formData.otherCountry.trim()
+      )
+      ||
       (
       formData.countryRegion === "Other" &&
       !formData.otherCountry.trim()
@@ -75,13 +107,23 @@ function CustomerFeedback() {
         email: "",
         organization: "",
         role: "",
-        usabilityRating: 0,
-        proteinAnalysisRating: 0,
-        moleculeDiscoveryRating: 0,
-        recommendationRating: 0,    
-        strengths: "",
-        improvements: "",
-        additionalComments: "",
+
+        scientificDomain: "",
+        otherScientificDomain: "",
+        organizationType: "",
+        otherOrganizationType: "",
+        teamSize: "",
+        countryRegion: "",
+        otherCountry: "",
+
+        overallExperience: "",
+        platformUsability: "",
+        aiMoleculeGeneration: "",
+        proteinAnalysis: "",
+        speedPerformance: "",
+        accuracyReliability: "",
+        dataVisualization: "",
+        recommendation: "",
       });
 
       console.log(response.data);
@@ -269,94 +311,173 @@ function CustomerFeedback() {
 
         <div className="section-divider"></div>
 
-        <div className="rating-row">
-          <span className="rating-title">
-            Platform Usability
-          </span>
+        <label className="field-label">
+          Overall Platform Experience *
+        </label>
 
-          <StarRating
-            rating={formData.usabilityRating}
-            setRating={(value) =>
-              setFormData({
-                ...formData,
-                usabilityRating: value,
-              })
-            }
-          />
+        <div className="rating-options">
+          {ratingOptions.map((option) => (
+            <label key={option}>
+              <input
+                type="radio"
+                name="overallExperience"
+                value={option}
+                checked={
+                  formData.overallExperience === option
+                }
+                onChange={handleChange}
+              />
+              {option}
+            </label>
+          ))}
         </div>
 
-        <div className="rating-row">
-          <span className="rating-title">
-            Protein Analysis Experience
-          </span>
+        <label className="field-label">
+          Platform Usability & Navigation *
+        </label>
 
-          <StarRating
-            rating={formData.proteinAnalysisRating}
-            setRating={(value) =>
-              setFormData({
-                ...formData,
-                proteinAnalysisRating: value,
-              })
-            }
-          />
+        <div className="rating-options">
+          {ratingOptions.map((option) => (
+            <label key={option}>
+              <input
+                type="radio"
+                name="platformUsability"
+                value={option}
+                checked={
+                  formData.platformUsability === option
+                }
+                onChange={handleChange}
+              />
+              {option}
+            </label>
+          ))}
         </div>
 
-        <div className="rating-row">
-          <span className="rating-title">
-            Molecule Discovery Quality
-          </span>
+        <label className="field-label">
+          AI Molecule Generation Quality *
+        </label>
 
-          <StarRating
-            rating={formData.moleculeDiscoveryRating}
-            setRating={(value) =>
-              setFormData({
-                ...formData,
-                moleculeDiscoveryRating: value,
-              })
-            }
-          />
+        <div className="rating-options">
+          {ratingOptions.map((option) => (
+            <label key={option}>
+              <input
+                type="radio"
+                name="aiMoleculeGeneration"
+                value={option}
+                checked={
+                  formData.aiMoleculeGeneration === option
+                }
+                onChange={handleChange}
+              />
+              {option}
+            </label>
+          ))}
         </div>
 
-        <div className="rating-row">
-          <span className="rating-title">
-            Would You Recommend NexTribe?
-          </span>
+        <label className="field-label">
+          Protein Analysis & Insights *
+        </label>
 
-          <StarRating
-            rating={formData.recommendationRating}
-            setRating={(value) =>
-              setFormData({
-                ...formData,
-                recommendationRating: value,
-              })
-            }
-          />
+        <div className="rating-options">
+          {ratingOptions.map((option) => (
+            <label key={option}>
+              <input
+                type="radio"
+                name="proteinAnalysis"
+                value={option}
+                checked={
+                  formData.proteinAnalysis === option
+                }
+                onChange={handleChange}
+              />
+              {option}
+            </label>
+          ))}
         </div>
 
-        <div className="section-divider"></div>
+        <label className="field-label">
+          Speed & Performance *
+        </label>
 
-        <label>Strengths</label>
-        <textarea
-          name="strengths"
-          placeholder="Share what you like about our platform?"
-          value={formData.strengths}
-          onChange={handleChange}
-        />
+        <div className="rating-options">
+          {ratingOptions.map((option) => (
+            <label key={option}>
+              <input
+                type="radio"
+                name="speedPerformance"
+                value={option}
+                checked={
+                  formData.speedPerformance === option
+                }
+                onChange={handleChange}
+              />
+              {option}
+            </label>
+          ))}
+        </div>
 
-        <label>Improvements</label>
-        <textarea
-          name="improvements"
-          placeholder="Share your suggestions for improvement?"
-          value={formData.improvements}
-          onChange={handleChange}
-        />
-        <label>Additional Comments</label>
-        <textarea
-          name="additionalComments"
-          placeholder="Any other feedback you would like to share?"
-          value={formData.additionalComments}
-          onChange={handleChange}
-        />
+        <label className="field-label">
+          Result Accuracy & Reliability *
+        </label>
+
+        <div className="rating-options">
+          {ratingOptions.map((option) => (
+            <label key={option}>
+              <input
+                type="radio"
+                name="accuracyReliability"
+                value={option}
+                checked={
+                  formData.accuracyReliability === option
+                }
+                onChange={handleChange}
+              />
+              {option}
+            </label>
+          ))}
+        </div>
+
+        <label className="field-label">
+          Data Visualization & Reports *
+        </label>
+
+        <div className="rating-options">
+          {ratingOptions.map((option) => (
+            <label key={option}>
+              <input
+                type="radio"
+                name="dataVisualization"
+                value={option}
+                checked={
+                  formData.dataVisualization === option
+                }
+                onChange={handleChange}
+              />
+              {option}
+            </label>
+          ))}
+        </div>
+        <label className="field-label">
+          Would You Recommend NexTribe? *
+        </label>
+
+        <div className="rating-options">
+          {ratingOptions.map((option) => (
+            <label key={option}>
+              <input
+                type="radio"
+                name="recommendation"
+                value={option}
+                checked={
+                  formData.recommendation === option
+                }
+                onChange={handleChange}
+              />
+              {option}
+            </label>
+          ))}
+        </div>
+
 
         {successMessage && (
           <div className="success-banner">

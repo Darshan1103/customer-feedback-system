@@ -135,39 +135,45 @@ function AdminDashboard() {
 
           <p><strong>Role:</strong> {feedback.role}</p>
 
-          <p><strong>Scientific Domain:</strong>{" "}{feedback.scientificDomain}</p>
+          <p><strong>Scientific Domain:</strong>{" "}{
+            feedback.scientificDomain === "Other"
+              ? feedback.otherScientificDomain
+              : feedback.scientificDomain
+          }
+          </p>
 
-          <p><strong>Organization Type:</strong>{" "}{feedback.organizationType}</p>
+          <p><strong>Organization Type:</strong>{" "}{
+            feedback.organizationType === "Other"
+              ? feedback.otherOrganizationType
+              : feedback.organizationType
+          }
+          </p>
 
           <p><strong>Team Size:</strong>{" "}{feedback.teamSize}</p>
 
-          <p><strong>Country / Region:</strong>{" "}{feedback.countryRegion}</p>
-
-          <p><strong>Usability Rating:</strong> {feedback.usabilityRating}</p>
-
-          <p>
-            <strong>Protein Analysis Rating:</strong> {feedback.proteinAnalysisRating}
+          <p><strong>Country / Region:</strong>{" "}{
+            feedback.countryRegion === "Other"
+              ? feedback.otherCountry
+              : feedback.countryRegion
+          }
           </p>
 
-          <p>
-            <strong>Molecule Discovery Rating:</strong> {feedback.moleculeDiscoveryRating}
-          </p>
+          <p><strong>Overall Experience:</strong>{" "}{feedback.overallExperience}</p>
 
-          <p>
-            <strong>Recommendation Rating:</strong> {feedback.recommendationRating}
-          </p>
+          <p><strong>Platform Usability:</strong>{" "}{feedback.platformUsability}</p>
 
-          <p>
-            <strong>Strengths:</strong> {feedback.strengths}
-          </p>
+          <p><strong>AI Molecule Generation:</strong>{" "}{feedback.aiMoleculeGeneration}</p>
 
-          <p>
-            <strong>Improvements:</strong> {feedback.improvements}
-          </p>
+          <p><strong>Protein Analysis:</strong>{" "}{feedback.proteinAnalysis}</p>  
 
-          <p>
-            <strong>Comments:</strong> {feedback.additionalComments}
-          </p>
+          <p><strong>Speed Performance:</strong>{" "}{feedback.speedPerformance}</p>
+
+          <p><strong>Accuracy & Reliability:</strong>{" "}{feedback.accuracyReliability}</p>
+
+          <p><strong>Data Visualization:</strong>{" "}{feedback.dataVisualization}</p>
+
+          <p><strong>Recommendation:</strong>{" "}{feedback.recommendation}</p>
+
           <hr />
 
           <h4>Admin Reply</h4>

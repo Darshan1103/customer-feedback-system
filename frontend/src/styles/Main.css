@@ -160,3 +160,26 @@ input {
   text-align: center;
   font-weight: 600;
 }
+
+.rating-options {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+
+  margin-bottom: 25px;
+}
+
+.rating-options label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+
+  font-size: 14px;
+  font-weight: 500;
+
+  cursor: pointer;
+}
+
+.rating-options input[type="radio"] {
+  cursor: pointer;
+}
