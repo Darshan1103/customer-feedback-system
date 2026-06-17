@@ -18,7 +18,6 @@ function CustomerFeedback() {
     role: "",
     scientificDomain: "",
     otherScientificDomain: "",
-
     organizationType: "",
     otherOrganizationType: "",
 
@@ -43,6 +42,22 @@ function CustomerFeedback() {
     dataVisualizationReason: "",
     recommendationReason: "",
 
+    continueSection2: "",
+
+    // Additional Questions (drop-downs) 
+    primaryUseCase: "",
+    otherPrimaryUseCase: "",
+    platformUsageFrequency: "",
+    mostUsedFeature: "",
+    toolComparison: "",
+    aiSuggestionQuality: "",
+
+    // Optional Additional questions (text areas)
+    valuableThing: "",
+    surprisedMoment: "",
+    wishFeature: "",
+    inaccurateResult: "",
+    heardAboutBioNex: "",
   });
 
   const [successMessage, setSuccessMessage] = useState("");
@@ -78,25 +93,26 @@ function CustomerFeedback() {
       !formData.accuracyReliability.trim() ||
       !formData.dataVisualization.trim() ||
       !formData.recommendation.trim() ||
-      (
-        formData.scientificDomain === "Other" &&
-        !formData.otherScientificDomain.trim()
-      )
-      ||
-      (
-        formData.organizationType === "Other" &&
-        !formData.otherOrganizationType.trim()
-      )
-      ||
-      (
-        formData.countryRegion === "Other" &&
-        !formData.otherCountry.trim()
-      )
-      ||
-      (
-      formData.countryRegion === "Other" &&
-      !formData.otherCountry.trim()
-      )
+      !formData.continueSection2.trim() ||
+
+      (formData.scientificDomain === "Other" && !formData.otherScientificDomain.trim()) ||
+
+      (formData.organizationType === "Other" && !formData.otherOrganizationType.trim()) ||
+
+      (formData.countryRegion === "Other" && !formData.otherCountry.trim()) ||
+
+      (formData.continueSection2 === "Yes" && !formData.primaryUseCase.trim()) ||
+
+      (formData.continueSection2 === "Yes" && 
+        formData.primaryUseCase === "Other" && 
+        !formData.otherPrimaryUseCase.trim()
+      ) ||
+
+      (formData.continueSection2 === "Yes" &&
+        (!formData.platformUsageFrequency.trim() || !formData.mostUsedFeature.trim() ||
+          !formData.toolComparison.trim() || !formData.aiSuggestionQuality.trim()
+        )
+      )      
     ) 
     {
       alert(
@@ -104,6 +120,28 @@ function CustomerFeedback() {
       );
       return;
     }
+
+    if (
+      (showReasonField(formData.overallExperience) && !formData.overallExperienceReason.trim()) ||
+
+      (showReasonField(formData.platformUsability) && !formData.platformUsabilityReason.trim()) ||
+
+      (showReasonField(formData.aiMoleculeGeneration) && !formData.aiMoleculeGenerationReason.trim()) ||
+
+      (showReasonField(formData.proteinAnalysis) && !formData.proteinAnalysisReason.trim()) ||
+
+      (showReasonField(formData.speedPerformance) && !formData.speedPerformanceReason.trim()) ||
+
+      (showReasonField(formData.accuracyReliability) && !formData.accuracyReliabilityReason.trim()) ||
+
+      (showReasonField(formData.dataVisualization) && !formData.dataVisualizationReason.trim()) ||
+
+      (showReasonField(formData.recommendation) && !formData.recommendationReason.trim())
+    ) {
+      alert("Please explain the ratings marked as Poor or Very Poor.");
+      return;
+    }
+
     try {
       const response = await axios.post(
         "http://localhost:5000/api/feedback",
@@ -146,7 +184,20 @@ function CustomerFeedback() {
         dataVisualizationReason: "",
         recommendationReason: "",
 
-        continueSection2: ""
+        continueSection2: "",
+
+        primaryUseCase: "",
+        otherPrimaryUseCase: "",
+        platformUsageFrequency: "",
+        mostUsedFeature: "",
+        toolComparison: "",
+        aiSuggestionQuality: "",
+
+        valuableThing: "",
+        surprisedMoment: "",
+        wishFeature: "",
+        inaccurateResult: "",
+        heardAboutBioNex: "",
       });
 
       console.log(response.data);
@@ -155,15 +206,6 @@ function CustomerFeedback() {
       console.error(error);
       alert("Error submitting feedback");
       }
-
-    if (
-      showReasonField(formData.overallExperience) &&
-      !formData.overallExperienceReason.trim()
-    ) {
-      alert("Please explain your rating.");
-      return;
-    }
-
   };
 
   return (
@@ -615,6 +657,240 @@ function CustomerFeedback() {
           </label>
         </div>
 
+        {formData.continueSection2 === "Yes" && (         // Section 2 questions (Drop-downs))
+          <>
+            <div className="section-divider"></div>
+
+            <h3 className="section-title">
+              Section 2
+            </h3>
+
+            <label className="field-label">
+              What is your primary use case on BioNex? *
+            </label>
+
+            <select
+              name="primaryUseCase"
+              value={formData.primaryUseCase}
+              onChange={handleChange}
+            >
+              <option value="">Select Use Case</option>
+
+              <option value="Drug Target Identification">
+                Drug Target Identification
+              </option>
+
+              <option value="Lead Compound Optimization">
+                Lead Compound Optimization
+              </option>
+
+              <option value="Protein–Ligand Binding Analysis">
+                Protein–Ligand Binding Analysis
+              </option>
+
+              <option value="De Novo Molecule Generation">
+                De Novo Molecule Generation
+              </option>
+
+              <option value="Academic / Research Exploration">
+                Academic / Research Exploration
+              </option>
+
+              <option value="Other">
+                Other
+              </option>
+            </select>
+
+            {formData.primaryUseCase === "Other" && (
+              <textarea
+                name="otherPrimaryUseCase"
+                placeholder="Please specify your primary use case"
+                value={formData.otherPrimaryUseCase}
+                onChange={handleChange}
+              />
+            )}
+
+            <label className="field-label">
+              How often do you use the platform? *
+            </label>
+
+            <select
+              name="platformUsageFrequency"
+              value={formData.platformUsageFrequency}
+              onChange={handleChange}
+            >
+              <option value="">Select Frequency</option>
+
+              <option value="Daily">Daily</option>
+
+              <option value="A few times a week">
+                A few times a week
+              </option>
+
+              <option value="Weekly">Weekly</option>
+
+              <option value="Monthly">Monthly</option>
+
+              <option value="First time / Trial">
+                First time / Trial
+              </option>
+            </select>
+
+            <label className="field-label">
+              Which feature do you use most? *
+            </label>
+
+            <select
+              name="mostUsedFeature"
+              value={formData.mostUsedFeature}
+              onChange={handleChange}
+            >
+              <option value="">Select Feature</option>
+
+              <option value="Molecule Discovery Engine">
+                Molecule Discovery Engine
+              </option>
+
+              <option value="Protein Structure Analysis">
+                Protein Structure Analysis
+              </option>
+
+              <option value="AI Suggestions / Generative AI">
+                AI Suggestions / Generative AI
+              </option>
+
+              <option value="Data Export / Reports">
+                Data Export / Reports
+              </option>
+
+              <option value="Collaboration / Team features">
+                Collaboration / Team features
+              </option>
+            </select>
+
+            <label className="field-label">
+              How does BioNex compare to your previous tools or workflows? *
+            </label>
+
+            <select
+              name="toolComparison"
+              value={formData.toolComparison}
+              onChange={handleChange}
+            >
+              <option value="">Select Option</option>
+
+              <option value="Much Better">
+                Much Better
+              </option>
+
+              <option value="Somewhat Better">
+                Somewhat Better
+              </option>
+
+              <option value="About the Same">
+                About the Same
+              </option>
+
+              <option value="Somewhat Worse">
+                Somewhat Worse
+              </option>
+
+              <option value="Much Worse / First tool I've used">
+                Much Worse / First tool I've used
+              </option>
+            </select>
+
+            <label className="field-label">
+              How would you describe the AI-generated molecule suggestions? *
+            </label>
+
+            <select
+              name="aiSuggestionQuality"
+              value={formData.aiSuggestionQuality}
+              onChange={handleChange}
+            >
+              <option value="">Select Option</option>
+
+              <option value="Highly relevant and novel">
+                Highly relevant and novel
+              </option>
+
+              <option value="Relevant but expected">
+                Relevant but expected
+              </option>
+
+              <option value="Hit or miss">
+                Hit or miss
+              </option>
+
+              <option value="Mostly off-target">
+                Mostly off-target
+              </option>
+
+              <option value="Haven't used this feature">
+                Haven't used this feature
+              </option>
+            </select>
+
+          <div className="section-divider"></div>
+
+          <label className="field-label">
+            What is the single most valuable thing BioNex has done for your research?
+          </label>
+
+          <textarea
+            name="valuableThing"
+            value={formData.valuableThing}
+            onChange={handleChange}
+            placeholder="Your answer"
+          />
+
+          <label className="field-label">
+            Describe a moment where the AI results surprised or impressed you.
+          </label>
+
+          <textarea
+            name="surprisedMoment"
+            value={formData.surprisedMoment}
+            onChange={handleChange}
+            placeholder="Your answer"
+          />
+
+          <label className="field-label">
+            What is the #1 feature you wish BioNex had?
+          </label>
+
+          <textarea
+            name="wishFeature"
+            value={formData.wishFeature}
+            onChange={handleChange}
+            placeholder="Your answer"
+          />
+
+          <label className="field-label">
+            Was there any result or output that felt inaccurate or misleading?
+          </label>
+
+          <textarea
+            name="inaccurateResult"
+            value={formData.inaccurateResult}
+            onChange={handleChange}
+            placeholder="Your answer"
+          />
+
+          <label className="field-label">
+            How did you hear about NexTribe / BioNex?
+          </label>
+
+          <textarea
+            name="heardAboutBioNex"
+            value={formData.heardAboutBioNex}
+            onChange={handleChange}
+            placeholder="Your answer"
+          />
+
+          </>
+        )}
 
         {successMessage && (
           <div className="success-banner">

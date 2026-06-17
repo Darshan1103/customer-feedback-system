@@ -33,6 +33,21 @@ const FeedbackSchema = new mongoose.Schema(
     recommendation: String,
     recommendationReason: String,
 
+    continueSection2: String,
+
+    primaryUseCase: String,
+    otherPrimaryUseCase: String,
+    platformUsageFrequency: String,
+    mostUsedFeature: String,
+    toolComparison: String,
+    aiSuggestionQuality: String,
+
+    valuableThing: String,
+    surprisedMoment: String,
+    wishFeature: String,
+    inaccurateResult: String,
+    heardAboutBioNex: String,
+
     adminReply: {
         type: String,
         default: ""

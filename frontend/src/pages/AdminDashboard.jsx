@@ -241,6 +241,59 @@ function AdminDashboard() {
             </p>
           )}
 
+
+          <p><strong>Additional Questions:</strong>{" "}{feedback.continueSection2}
+          </p>
+
+          {feedback.continueSection2 === "Yes" && (
+            <>
+              <p><strong>Primary Use Case:</strong> {feedback.primaryUseCase}</p>
+
+              <p><strong>Usage Frequency:</strong> {feedback.platformUsageFrequency}</p>
+
+              <p><strong>Most Used Feature:</strong> {feedback.mostUsedFeature}</p>
+
+              <p><strong>Tool Comparison:</strong> {feedback.toolComparison}</p>
+
+              <p><strong>AI Suggestion Quality:</strong> {feedback.aiSuggestionQuality}</p>
+            </>
+          )}
+
+          {feedback.valuableThing && (
+            <p>
+              <strong>Most Valuable Thing:</strong>{" "}
+              {feedback.valuableThing}
+            </p>
+          )}
+
+          {feedback.surprisedMoment && (
+            <p>
+              <strong>Surprised Moment:</strong>{" "}
+              {feedback.surprisedMoment}
+            </p>
+          )}
+
+          {feedback.wishFeature && (
+            <p>
+              <strong>Requested Feature:</strong>{" "}
+              {feedback.wishFeature}
+            </p>
+          )}
+
+          {feedback.inaccurateResult && (
+            <p>
+              <strong>Inaccurate Result:</strong>{" "}
+              {feedback.inaccurateResult}
+            </p>
+          )}
+
+          {feedback.heardAboutBioNex && (
+            <p>
+              <strong>Heard About BioNex:</strong>{" "}
+              {feedback.heardAboutBioNex}
+            </p>
+          )}
+
           <hr />
 
           <h4>Admin Reply</h4>
