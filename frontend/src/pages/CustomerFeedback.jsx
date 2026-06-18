@@ -62,6 +62,10 @@ function CustomerFeedback() {
 
   const [successMessage, setSuccessMessage] = useState("");
 
+  const [otp, setOtp] = useState("");
+  const [otpSent, setOtpSent] = useState(false);
+  const [emailVerified, setEmailVerified] = useState(false);
+
   const handleChange = (e) => {
     setFormData({
       ...formData,
@@ -72,10 +76,72 @@ function CustomerFeedback() {
     return rating === "Very Poor" || rating === "Poor";
   };
 
+
+// Function to send OTP 
+  const sendOtp = async () => {
+    try {
+
+      if (!formData.email.trim()) {
+        alert("Enter email first");
+        return;
+      }
+
+      const response = await axios.post(
+        "http://localhost:5000/api/email/send-otp",
+        {
+          email: formData.email,
+        }
+      );
+
+      alert(response.data.message);
+
+      setOtpSent(true);
+
+    } catch (error) {
+
+      console.error(error);
+
+      alert("Failed to send OTP");
+    }
+  };
+
+
+// Function to verify OTP
+  const verifyOtp = async () => {
+
+    try {
+
+      const response = await axios.post(
+        "http://localhost:5000/api/email/verify-otp",
+        {
+          email: formData.email,
+          otp,
+        }
+      );
+
+      if (response.data.verified) {
+
+        setEmailVerified(true);
+
+        alert("Email verified successfully");
+      }
+
+    } catch (error) {
+
+      alert("Invalid OTP");
+    }
+  };
+
+
   const handleSubmit = async () => {
     
     setSuccessMessage("");
 
+    if (!emailVerified) {
+      alert("Please verify your email first.");
+      return;
+    }
+    
     if (
       !formData.customerName.trim() ||
       !formData.email.trim() ||
@@ -238,12 +304,51 @@ function CustomerFeedback() {
 
         <input
           type="email"
+          disabled={emailVerified}
           name="email"
           placeholder="Enter your email"
           required
           value={formData.email}
           onChange={handleChange}
         />
+
+        <button
+          type="button"
+          className="otp-btn"
+          onClick={sendOtp}
+        >
+          Send OTP
+        </button> 
+
+        {otpSent && (
+          <>
+            <input
+              type="text"
+              placeholder="Enter OTP"
+              value={otp}
+              onChange={(e) => setOtp(e.target.value)}
+            />
+            <button
+              type="button"
+              className="otp-btn"
+              onClick={verifyOtp}
+            >
+              Verify OTP
+            </button>
+          </>
+        )}
+
+        {emailVerified && (
+          <p
+            style={{
+              color: "green",
+              fontWeight: "600",
+              marginTop: "10px",
+            }}
+          >
+            ✓ Email Verified
+          </p>
+        )}
 
         <label className="field-label">
           Organization *
