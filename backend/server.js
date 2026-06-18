@@ -4,12 +4,14 @@ const cors = require("cors");
 require("dotenv").config();
 
 const feedbackRoutes = require("./routes/feedbackRoutes");  
+const emailRoutes = require("./routes/emailRoutes");
 
 const app = express();
 
 app.use(cors());
 app.use(express.json());
 app.use("/api/feedback", feedbackRoutes);   
+app.use("/api/email", emailRoutes);
 
 mongoose
   .connect(process.env.MONGO_URI)
