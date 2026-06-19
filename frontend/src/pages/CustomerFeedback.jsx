@@ -266,6 +266,10 @@ function CustomerFeedback() {
         heardAboutBioNex: "",
       });
 
+      setOtp("");
+      setOtpSent(false);
+      setEmailVerified(false);
+
       console.log(response.data);
     } 
     catch (error) {
@@ -316,11 +320,12 @@ function CustomerFeedback() {
           type="button"
           className="otp-btn"
           onClick={sendOtp}
+          disabled={emailVerified}
         >
           Send OTP
         </button> 
 
-        {otpSent && (
+        {otpSent && !emailVerified && (
           <>
             <input
               type="text"
@@ -337,6 +342,14 @@ function CustomerFeedback() {
             </button>
           </>
         )}
+
+        <button
+          type="button"
+          className="otp-btn"
+          onClick={sendOtp}
+        >
+          Resend OTP
+        </button>
 
         {emailVerified && (
           <p
