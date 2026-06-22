@@ -66,8 +66,9 @@ function CustomerFeedback() {
   const [otpSent, setOtpSent] = useState(false);
   const [emailVerified, setEmailVerified] = useState(false);
 
-  const [notification, setNotification] = useState("");
-  const [notificationType, setNotificationType] = useState("");
+  const [modalOpen, setModalOpen] = useState(false);
+  const [modalMessage, setModalMessage] = useState("");
+  const [modalType, setModalType] = useState("");
 
   const handleChange = (e) => {
     setFormData({
@@ -91,18 +92,19 @@ function CustomerFeedback() {
     return rating === "Very Poor" || rating === "Poor";
   };
 
+  const showModal = (message, type = "info") => {
+    setModalMessage(message);
+    setModalType(type);
+    setModalOpen(true);
+  };
+
 
 // Function to send OTP 
   const sendOtp = async () => {
     try {
 
       if (!formData.email.trim()) {
-          setNotification("Enter email first");
-          setNotificationType("error");
-
-          setTimeout(() => {
-            setNotification("");
-          }, 3000);
+        showModal("Enter email first","error");
         return;
       }
 
@@ -113,12 +115,7 @@ function CustomerFeedback() {
         }
       );
 
-      setNotification(response.data.message);
-      setNotificationType("success");
-
-      setTimeout(() => {
-        setNotification("");
-      }, 3000);
+      showModal(response.data.message,"success");
 
       setOtpSent(true);
 
@@ -126,12 +123,7 @@ function CustomerFeedback() {
 
       console.error(error);
 
-      setNotification("Failed to send OTP");
-      setNotificationType("error");
-
-      setTimeout(() => {
-        setNotification("");
-      }, 3000);
+      showModal("Failed to send OTP","error");
     }
   };
 
@@ -154,23 +146,16 @@ function CustomerFeedback() {
       }
 
     } catch (error) {
-
-      setNotification("Invalid OTP");
-      setNotificationType("error");
-
-      setTimeout(() => {
-        setNotification("");
-      }, 3000);
+      showModal("Invalid OTP","error");
     }
   };
-
 
   const handleSubmit = async () => {
     
     setSuccessMessage("");
 
     if (!emailVerified) {
-      alert("Please verify your email first.");
+      showModal("Please verify your email first","error");
       return;
     }
     
@@ -213,9 +198,7 @@ function CustomerFeedback() {
       )      
     ) 
     {
-      alert(
-        "Please fill all required fields."
-      );
+      showModal("Please fill all the required fields","error");
       return;
     }
 
@@ -236,7 +219,7 @@ function CustomerFeedback() {
 
       (showReasonField(formData.recommendation) && !formData.recommendationReason.trim())
     ) {
-      alert("Please explain the ratings marked as Poor or Very Poor.");
+      showModal("Please explain the reson behind Poor/Very Poor rating","error");
       return;
     }
 
@@ -306,7 +289,7 @@ function CustomerFeedback() {
     } 
     catch (error) {
       console.error(error);
-      alert("Error submitting feedback");
+      showModal("Error submitting feedback","error");
       }
   };
 
@@ -348,12 +331,6 @@ function CustomerFeedback() {
           onChange={handleEmailChange}
         />
 
-        {notification && (
-          <div className={`notification ${notificationType}`}>
-            {notification}
-          </div>
-        )}
-
         {!otpSent && (
           <button
             type="button"
@@ -370,8 +347,9 @@ function CustomerFeedback() {
               type="text"
               className="otp-input"
               placeholder="Enter OTP"
+              maxLength={6}
               value={otp}
-              onChange={(e) => setOtp(e.target.value)}
+              onChange={(e) => setOtp(e.target.value.replace(/\D/g, ""))}
             />
             <div className="otp-actions">
             <button
@@ -1077,6 +1055,25 @@ function CustomerFeedback() {
             Click to check your feedback status
           </a>
         </p>
+
+        {modalOpen && (
+          <div className="modal-overlay">
+            <div className="custom-modal">
+
+              <button
+                className="modal-close"
+                onClick={() => setModalOpen(false)}
+              >
+                ✕
+              </button>
+
+              <div className={`modal-message ${modalType}`}>
+                {modalMessage}
+              </div>
+
+            </div>
+          </div>
+        )}
 
       </div>
     </div>
