@@ -183,3 +183,56 @@ input {
 .rating-options input[type="radio"] {
   cursor: pointer;
 }
+
+.otp-btn {
+  padding: 10px 16px;
+  border: none;
+  border-radius: 10px;
+  color: white;
+  font-size: 14px;
+  font-weight: 600;
+  background: linear-gradient(
+    90deg,
+    #5b4bc4,
+    #f06d6d
+  );
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.otp-btn:hover {
+  opacity: 0.95;
+  transform: translateY(-2px);
+}
+
+.otp-actions {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.email-verified {
+  color: #1e8947;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.otp-input {
+  width: 220px !important;
+  margin-bottom: 15px;
+}
+
+.notification {
+  text-align: left;
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 15px;
+}
+
+.notification.success {
+  color: #1e8947;
+}
+
+.notification.error {
+  color: #991b1b;
+}

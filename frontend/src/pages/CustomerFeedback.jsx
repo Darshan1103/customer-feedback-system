@@ -66,12 +66,27 @@ function CustomerFeedback() {
   const [otpSent, setOtpSent] = useState(false);
   const [emailVerified, setEmailVerified] = useState(false);
 
+  const [notification, setNotification] = useState("");
+  const [notificationType, setNotificationType] = useState("");
+
   const handleChange = (e) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value,
     });
   };
+
+  const handleEmailChange = (e) => {
+    setFormData({
+      ...formData,
+      email: e.target.value,
+    });
+
+    setOtp("");
+    setOtpSent(false);
+    setEmailVerified(false);
+  };
+
   const showReasonField = (rating) => {
     return rating === "Very Poor" || rating === "Poor";
   };
@@ -82,7 +97,12 @@ function CustomerFeedback() {
     try {
 
       if (!formData.email.trim()) {
-        alert("Enter email first");
+          setNotification("Enter email first");
+          setNotificationType("error");
+
+          setTimeout(() => {
+            setNotification("");
+          }, 3000);
         return;
       }
 
@@ -93,7 +113,12 @@ function CustomerFeedback() {
         }
       );
 
-      alert(response.data.message);
+      setNotification(response.data.message);
+      setNotificationType("success");
+
+      setTimeout(() => {
+        setNotification("");
+      }, 3000);
 
       setOtpSent(true);
 
@@ -101,7 +126,12 @@ function CustomerFeedback() {
 
       console.error(error);
 
-      alert("Failed to send OTP");
+      setNotification("Failed to send OTP");
+      setNotificationType("error");
+
+      setTimeout(() => {
+        setNotification("");
+      }, 3000);
     }
   };
 
@@ -120,15 +150,17 @@ function CustomerFeedback() {
       );
 
       if (response.data.verified) {
-
         setEmailVerified(true);
-
-        alert("Email verified successfully");
       }
 
     } catch (error) {
 
-      alert("Invalid OTP");
+      setNotification("Invalid OTP");
+      setNotificationType("error");
+
+      setTimeout(() => {
+        setNotification("");
+      }, 3000);
     }
   };
 
@@ -313,26 +345,35 @@ function CustomerFeedback() {
           placeholder="Enter your email"
           required
           value={formData.email}
-          onChange={handleChange}
+          onChange={handleEmailChange}
         />
 
-        <button
-          type="button"
-          className="otp-btn"
-          onClick={sendOtp}
-          disabled={emailVerified}
-        >
-          Send OTP
-        </button> 
+        {notification && (
+          <div className={`notification ${notificationType}`}>
+            {notification}
+          </div>
+        )}
+
+        {!otpSent && (
+          <button
+            type="button"
+            className="otp-btn"
+            onClick={sendOtp}
+          >
+            Send OTP
+          </button>
+        )} 
 
         {otpSent && !emailVerified && (
           <>
             <input
               type="text"
+              className="otp-input"
               placeholder="Enter OTP"
               value={otp}
               onChange={(e) => setOtp(e.target.value)}
             />
+            <div className="otp-actions">
             <button
               type="button"
               className="otp-btn"
@@ -340,27 +381,22 @@ function CustomerFeedback() {
             >
               Verify OTP
             </button>
+
+            <button
+              type="button"
+              className="otp-btn"
+              onClick={sendOtp}
+            >
+              Resend OTP
+            </button>
+            </div>
           </>
         )}
 
-        <button
-          type="button"
-          className="otp-btn"
-          onClick={sendOtp}
-        >
-          Resend OTP
-        </button>
-
         {emailVerified && (
-          <p
-            style={{
-              color: "green",
-              fontWeight: "600",
-              marginTop: "10px",
-            }}
-          >
+          <div className="email-verified">
             ✓ Email Verified
-          </p>
+          </div>
         )}
 
         <label className="field-label">
