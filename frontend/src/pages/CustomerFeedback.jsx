@@ -66,6 +66,8 @@ function CustomerFeedback() {
   const [otpSent, setOtpSent] = useState(false);
   const [emailVerified, setEmailVerified] = useState(false);
 
+  const [sendingOtp, setSendingOtp] = useState(false);
+
   const [modalOpen, setModalOpen] = useState(false);
   const [modalMessage, setModalMessage] = useState("");
   const [modalType, setModalType] = useState("");
@@ -101,6 +103,10 @@ function CustomerFeedback() {
 
 // Function to send OTP 
   const sendOtp = async () => {
+
+    if (sendingOtp) return;
+    setSendingOtp(true);
+
     try {
 
       if (!formData.email.trim()) {
@@ -124,12 +130,19 @@ function CustomerFeedback() {
       console.error(error);
 
       showModal("Failed to send OTP","error");
+    }finally {
+      setSendingOtp(false);
     }
   };
 
 
 // Function to verify OTP
   const verifyOtp = async () => {
+
+    if (!otp.trim()) {
+      showModal("Please enter OTP first", "error");
+      return;
+    }
 
     try {
 
@@ -336,8 +349,9 @@ function CustomerFeedback() {
             type="button"
             className="otp-btn"
             onClick={sendOtp}
+            disabled={sendingOtp}
           >
-            Send OTP
+            {sendingOtp ? "Sending..." : "Send OTP"}
           </button>
         )} 
 
@@ -364,8 +378,9 @@ function CustomerFeedback() {
               type="button"
               className="otp-btn"
               onClick={sendOtp}
+              disabled={sendingOtp}
             >
-              Resend OTP
+              {sendingOtp ? "Sending..." : "Resend OTP"}
             </button>
             </div>
           </>
